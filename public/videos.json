@@ -1,0 +1,18 @@
+{
+  "Core Subject 1A": [
+    { "title": "Intro to Programming", "youtubeId": "Z1Yd7upQsXY" },
+    { "title": "Variables & Data Types", "youtubeId": "wxznTygnRfQ" },
+    { "title": "Loops & Conditions", "youtubeId": "Kn06785pkJg" },
+    { "title": "Functions & Scope", "youtubeId": "8PopR3x-VMY" }
+  ],
+  "Elective 1B": [
+    { "title": "Intro to AI", "youtubeId": "JMUxmLyrhSk" },
+    { "title": "Machine Learning Basics", "youtubeId": "Gv9_4yMHFhI" },
+    { "title": "Neural Networks", "youtubeId": "aircAruvnKk" }
+  ],
+  "Lab Session 1C": [
+    { "title": "Install Python", "youtubeId": "YYXdXT2l-Gg" },
+    { "title": "First Lab Code", "youtubeId": "rfscVS0vtbw" },
+    { "title": "File I/O Demo", "youtubeId": "Uh2ebFW8OYM" }
+  ]
+}
