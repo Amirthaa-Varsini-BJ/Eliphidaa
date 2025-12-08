@@ -5,6 +5,10 @@ import VideoSection from './components/VideoSection';
 import NotesSection from './components/NotesSection';
 import CalendarAndTasks from './components/CalendarAndTasks';
 import StudyRooms from './components/StudyRooms';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import CalendarPage from './components/CalendarPage';
+import ElphiChatWidget from './components/ElphiChatWidget';
 import './styles/global.css';
 
 import ElphiChatWidget from './components/ElphiChatWidget';

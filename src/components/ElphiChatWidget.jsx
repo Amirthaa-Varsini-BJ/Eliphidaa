@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ElphiChatWidget.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import ReactMarkdown from 'react-markdown';
-import robotImg from '../assets/robot.png';
-import copyIcon from '../assets/copy.png';
-import editIcon from '../assets/edit.png';
 
 function ElphiChatWidget() {
   const [open, setOpen] = useState(false);
@@ -38,7 +36,7 @@ function ElphiChatWidget() {
         contents: [{ role: 'user', parts: [{ text: userMessage.text }] }],
       };
 
-      const apiKey = "AIzaSyBB152D1cfIb5MVc8prtyeVnBOpt6v4APk"; // Put your Gemini API key
+      const apiKey = "AIzaSyBB152D1cfIb5MVc8prtyeVnBOpt6v4APk"; // Put your Gemini API key here
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -70,6 +68,7 @@ function ElphiChatWidget() {
     }
   };
 
+  // --- Copy message text ---
   const copyMessage = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -79,33 +78,46 @@ function ElphiChatWidget() {
     }
   };
 
+  // --- Edit user message ---
   const editMessage = (index) => {
     const msg = messages[index];
     if (msg.sender !== 'user') return;
     setInput(msg.text);
-    setMessages((prev) => prev.filter((_, i) => i !== index));
+    setMessages((prev) => prev.filter((_, i) => i !== index)); // remove old version
   };
 
   return (
     <div className="elphi-widget">
-      {/* Floating Bot Button */}
+      {/* Toggle Button */}
+      <button
+        className={`elphi-toggle ${open ? 'open' : ''}`}
+        onClick={toggleOpen}
+        aria-expanded={open}
+        aria-label={open ? 'Close Elphi chat' : 'Open Elphi chat'}
+      >
+        <i className={`bi ${open ? 'bi-x-lg' : 'bi-chat-dots-fill'}`} />
+      </button>
 
-<button
-  className={`elphi-toggle ${open ? 'open' : ''}`}
-  onClick={toggleOpen}
-  aria-expanded={open}
-  aria-label={open ? 'Close Elphi chat' : 'Open Elphi chat'}
->
-  <img
-    src={robotImg}
-    alt="Chat Bot"
-    style={{ width: 50, height: 50, objectFit: 'contain' }}
-    className="robot-img"
-  />
-</button>
+      {/* Animated Effects */}
+      {open && (
+        <div className="stars">
+          {[...Array(10)].map((_, i) => (
+            <div
+              key={i}
+              className="star"
+              style={{ 
+                top: "50%", left: "50%",
+                "--x": `${Math.random()*200-100}px`,
+                "--y": `${Math.random()*200-100}px`
+              }}
+            />
+          ))}
+          <div className="butterfly" style={{ left: "10%", bottom: "10%" }} />
+          <div className="butterfly" style={{ left: "70%", bottom: "15%" }} />
+        </div>
+      )}
 
-
-      {/* Chat Panel */}
+      {/* Panel */}
       <div className={`elphi-panel ${open ? 'show' : ''}`}>
         <div className="elphi-header">
           <div className="elphi-avatar">E</div>
@@ -115,6 +127,7 @@ function ElphiChatWidget() {
           </div>
         </div>
 
+        {/* Messages */}
         <div className="elphi-messages" role="log" aria-live="polite">
           {messages.length === 0 && (
             <div className="elphi-empty">
@@ -126,26 +139,26 @@ function ElphiChatWidget() {
             <div key={i} className={`elphi-msg ${m.sender}`}>
               <div className="bubble">
                 <ReactMarkdown>{m.text}</ReactMarkdown>
+
+                {/* Actions */}
                 <div className="msg-actions">
-  <button
-  className="icon-btn"
-  onClick={() => copyMessage(m.text)}
-  title="Copy"
->
-  <img src={copyIcon} alt="Copy" style={{ width: 16, height: 16 }} />
-</button>
-
-{m.sender === 'user' && (
-  <button
-    className="icon-btn"
-    onClick={() => editMessage(i)}
-    title="Edit"
-  >
-    <img src={editIcon} alt="Edit" style={{ width: 16, height: 16 }} />
-  </button>
-)}
-
-</div>
+                  <button
+                    className="icon-btn"
+                    onClick={() => copyMessage(m.text)}
+                    title="Copy"
+                  >
+                    <i className="bi bi-clipboard" />
+                  </button>
+                  {m.sender === 'user' && (
+                    <button
+                      className="icon-btn"
+                      onClick={() => editMessage(i)}
+                      title="Edit"
+                    >
+                      <i className="bi bi-pencil-square" />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -163,6 +176,7 @@ function ElphiChatWidget() {
           <div ref={messagesEndRef} />
         </div>
 
+        {/* Input */}
         <div className="elphi-input">
           <textarea
             className="elphi-textarea"
@@ -178,7 +192,7 @@ function ElphiChatWidget() {
             onClick={sendMessage}
             disabled={loading || !input.trim()}
           >
-            ➤
+            <i className="bi bi-arrow-up" />
           </button>
         </div>
       </div>
