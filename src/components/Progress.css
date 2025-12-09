@@ -1,0 +1,20 @@
+.progress-container {
+  background: #1e293b; /* dark slate */
+  color: #f1f5f9;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  text-align: center;
+}
+
+.progress-container h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #facc15; /* gold */
+}
+
+.recharts-legend-item text {
+  fill: #f1f5f9 !important;
+}
