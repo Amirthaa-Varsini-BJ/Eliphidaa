@@ -1,16 +1,35 @@
 // src/components/Login.js
-import { Link } from 'react-router-dom';
 import React, { useEffect, useRef, useState } from 'react'; // Import useState
 import './Login.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 // Create an Audio object instance outside the component to avoid re-creation
 const bookOpenSound = new Audio('/sounds/book-open.mp3'); // IMPORTANT: Verify this path!
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
+        const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const navigate = useNavigate();
     const sparkleContainerRef = useRef(null);
     const loginFormWrapperRef = useRef(null);
+    const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (!email || !password) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  const userData = {
+    name: email.split("@")[0],
+    email: email
+  };
+
+  localStorage.setItem("elphiUser", JSON.stringify(userData));
+
+  setIsLoggedIn(true);   // 🔥 IMPORTANT
+navigate("/dashboard");};
     // New state for dark mode
     const [isDarkMode, setIsDarkMode] = useState(
         () => localStorage.getItem('theme') === 'dark' // Initialize from localStorage
@@ -106,15 +125,27 @@ const Login = () => {
                 <div ref={loginFormWrapperRef} className="login-form-book-wrapper">
                     <div className="login-form p-4">
                         <h3 className="text-center mb-4 login-title">Welcome Back 👋</h3>
-                        <form className="login-form-content">
+                        <form className="login-form-content" onSubmit={handleSubmit}>
                             <div className="form-group mb-3">
                                 <label>Email</label>
-                                <input type="email" className="form-control" placeholder="Enter your email" required />
-                            </div>
+<input
+  type="email"
+  className="form-control"
+  placeholder="Enter your email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  required
+/>                            </div>
                             <div className="form-group mb-4">
                                 <label>Password</label>
-                                <input type="password" className="form-control" placeholder="Enter your password" required />
-                            </div>
+<input
+  type="password"
+  className="form-control"
+  placeholder="Enter your password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  required
+/>                            </div>
                             <button type="submit" className="btn btn-primary btn-block w-100 login-button">Sign In</button>
 
                             <a href="/forgot" className="d-block text-center mt-3 forgot-password-link">Forgot Password?</a>

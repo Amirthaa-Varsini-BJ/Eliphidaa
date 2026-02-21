@@ -2,18 +2,47 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Signup.css'; // We'll create this CSS file next
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import { useNavigate, Link } from "react-router-dom";
 // You might want a different sound for signup, or reuse the book-open one.
 // For now, let's assume a 'register-chime.mp3' or similar, placed in /public/sounds/
 const signupSound = new Audio('/sounds/register-chime.mp3'); // IMPORTANT: Verify this path!
 
-const Signup = () => {
-    const sparkleContainerRef = useRef(null);
+const Signup = ({ setIsLoggedIn }) => {    const sparkleContainerRef = useRef(null);
     const signupFormWrapperRef = useRef(null);
     const [isDarkMode, setIsDarkMode] = useState(
         () => localStorage.getItem('theme') === 'dark'
     );
+const navigate = useNavigate();
 
+const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  if (!name || !email || !password || !confirmPassword) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  const userData = {
+    name,
+    email
+  };
+
+  localStorage.setItem("elphiUser", JSON.stringify(userData));
+
+  if (setIsLoggedIn) {
+    setIsLoggedIn(true);
+  }
+
+navigate("/dashboard");};
     // Apply dark mode class to body on state change
     useEffect(() => {
         if (isDarkMode) {
@@ -104,23 +133,46 @@ const Signup = () => {
                 <div ref={signupFormWrapperRef} className="signup-form-book-wrapper">
                     <div className="signup-form p-4">
                         <h3 className="text-center mb-4 signup-title">Join Our Learning Journey! ✨</h3>
-                        <form className="signup-form-content">
-                            <div className="form-group mb-3">
+<form className="signup-form-content" onSubmit={handleSubmit}>                            <div className="form-group mb-3">
                                 <label>Full Name</label>
-                                <input type="text" className="form-control" placeholder="Enter your full name" required />
-                            </div>
+<input
+  type="text"
+  className="form-control"
+  placeholder="Enter your full name"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+  required
+/>                            </div>
                             <div className="form-group mb-3">
                                 <label>Email</label>
-                                <input type="email" className="form-control" placeholder="Enter your email" required />
-                            </div>
+<input
+  type="email"
+  className="form-control"
+  placeholder="Enter your email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  required
+/>                            </div>
                             <div className="form-group mb-4">
                                 <label>Password</label>
-                                <input type="password" className="form-control" placeholder="Create a password" required />
-                            </div>
+<input
+  type="password"
+  className="form-control"
+  placeholder="Create a password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  required
+/>                            </div>
                             <div className="form-group mb-4">
                                 <label>Confirm Password</label>
-                                <input type="password" className="form-control" placeholder="Confirm your password" required />
-                            </div>
+<input
+  type="password"
+  className="form-control"
+  placeholder="Confirm your password"
+  value={confirmPassword}
+  onChange={(e) => setConfirmPassword(e.target.value)}
+  required
+/>                            </div>
                             <button type="submit" className="btn btn-primary btn-block w-100 signup-button">Register Now!</button>
 
                             <div className="social-login text-center mt-4">
@@ -131,7 +183,7 @@ const Signup = () => {
                             </div>
                         </form>
                         <div className="mt-4 text-center login-section">
-                            <p>Already have an account? <a href="/login" className="login-link">Sign in here</a></p>
+                            <p>Already have an account? <Link to="/login" className="login-link">Sign in here</Link></p>
                         </div>
                     </div>
                 </div>

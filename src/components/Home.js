@@ -3,6 +3,7 @@ import './Home.css';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { useTheme } from '../context/ThemeContext';
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,20 +38,18 @@ const Home = () => {
 
   return (
     <div className={darkMode ? 'dark-mode' : 'light-mode'}>
-      <nav className="navbar">
-        <h2 className="logo">Elphida</h2>
-        <div>
-  <button onClick={toggleTheme} className="btn btn-outline-light me-2">
-    {darkMode ? 'Light Mode' : 'Dark Mode'}
-  </button>
-  <a href="#about" className="btn btn-outline-light me-2">About</a>
-  <a href="#contact" className="btn btn-outline-light me-2">Contact Us</a>
-  <a href="/admin" className="btn btn-outline-light me-2">Admin</a>
-  <a href="/login" className="btn btn-outline-light me-2">Login</a>
-  <a href="/signup" className="btn btn-warning text-dark">Sign Up</a>
-</div>
+     <nav className="navbar">
+  <h2 className="logo">Elphida</h2>
 
-      </nav>
+  <div className="nav-right">
+    <Link to="/login" className="nav-link">Login</Link>
+    <Link to="/signup" className="nav-link signup-btn">Sign Up</Link>
+
+    <button onClick={toggleTheme} className="theme-toggle">
+      {darkMode ? "🌙" : "☀️"}
+    </button>
+  </div>
+</nav>
 
       <div className="hero-video-wrapper">
         <video autoPlay muted loop playsInline className="full-video">

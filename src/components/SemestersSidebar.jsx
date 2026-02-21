@@ -14,6 +14,9 @@ const styles = {
     textAlign: 'left',
     transition: 'transform 0.2s ease, box-shadow 0.2s ease',
     willChange: 'transform',
+    backgroundColor: 'transparent',
+border: 'none',
+outline: 'none',
   },
   subjectButton: {
     width: '100%',
@@ -74,15 +77,11 @@ const SemestersSidebar = ({ setActiveSubject }) => {
                   color: 'var(--text-primary)',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
-                  e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.transform = 'none';
-                  e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                }}
+  e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+}}
+onMouseLeave={e => {
+  e.currentTarget.style.transform = 'none';
+}}
               >
                 {sem.name}
                 {isOpen ? <FaChevronUp /> : <FaChevronDown />}
@@ -98,20 +97,16 @@ const SemestersSidebar = ({ setActiveSubject }) => {
                           ...styles.subjectButton,
                           ...(localActiveSubject === subject ? styles.activeSubject : {}),
                         }}
-                        onMouseEnter={e => {
-                          if (localActiveSubject !== subject) {
-                            e.currentTarget.style.transform = 'translateY(-1px) scale(1.01)';
-                            e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
-                            e.currentTarget.style.backgroundColor = 'var(--hover-bg)';
-                          }
-                        }}
-                        onMouseLeave={e => {
-                          if (localActiveSubject !== subject) {
-                            e.currentTarget.style.transform = 'none';
-                            e.currentTarget.style.boxShadow = 'none';
-                            e.currentTarget.style.backgroundColor = 'transparent';
-                          }
-                        }}
+                       onMouseEnter={e => {
+  if (localActiveSubject !== subject) {
+    e.currentTarget.style.transform = 'translateY(-1px) scale(1.01)';
+  }
+}}
+onMouseLeave={e => {
+  if (localActiveSubject !== subject) {
+    e.currentTarget.style.transform = 'none';
+  }
+}}
                       >
                         {subject}
                       </button>

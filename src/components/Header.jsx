@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { FaMusic, FaUser, FaFileUpload, FaChartLine, FaSun, FaSignOutAlt } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+import { FaUser, FaSignOutAlt } from 'react-icons/fa';
 
 const dropdownItemStyle = {
   display: 'flex',
@@ -17,28 +18,24 @@ const dropdownItemStyle = {
   textAlign: 'left'
 };
 
-const Header = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+const Header = ({ setIsLoggedIn }) => {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [streak, setStreak] = useState(0);
+  const navigate = useNavigate();
 
-  const handleUpload = () => {
-    console.log("Upload Notes clicked");
-    // Firebase upload logic can go here
-  };
+  const user = JSON.parse(localStorage.getItem("elphiUser"));
 
-  const handleProgress = () => {
-    console.log("Progress clicked");
-    // Firebase fetch progress logic
-  };
-
-  const handleLightMode = () => {
-    console.log("Light Mode toggled");
-    // Toggle theme logic
-  };
+  // 🔥 Read streak from localStorage
+  useEffect(() => {
+    const storedStreak = parseInt(localStorage.getItem("elphiStreak")) || 0;
+    setStreak(storedStreak);
+  }, []);
 
   const handleLogout = () => {
-    console.log("Logout clicked");
-    // Firebase auth signOut logic
-  };
+  localStorage.removeItem("elphiUser");
+  setIsLoggedIn(false);   // IMPORTANT
+  navigate("/", { replace: true });
+};
 
   return (
     <header style={{
@@ -53,36 +50,107 @@ const Header = () => {
       backgroundColor: 'var(--bg-primary)',
       zIndex: 10
     }}>
-      <h1 style={{ fontSize: '24px', fontWeight: 600, color: 'var(--accent-blue)' }}>Elphida</h1>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: 'var(--bg-secondary)', padding: '8px 12px', borderRadius: '8px' }}>
-          <FaMusic style={{ color: 'var(--accent-orange)' }} />
-          <span style={{ fontWeight: 600 }}>5</span>
+      {/* Logo */}
+      <h1 style={{
+        fontSize: '24px',
+        fontWeight: 600,
+        color: 'var(--accent-blue)'
+      }}>
+        Elphida
+      </h1>
+
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '24px'
+      }}>
+
+        {/* 🔥 Daily Streak Badge */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          backgroundColor: 'var(--bg-secondary)',
+          padding: '8px 14px',
+          borderRadius: '10px'
+        }}>
+          <span style={{ fontSize: '18px' }}>🔥</span>
+          <span style={{ fontWeight: 600 }}>
+            {streak} Day Streak
+          </span>
         </div>
+
+        {/* User Dropdown */}
         <div style={{ position: 'relative' }}>
-          <button onClick={() => setDropdownOpen(!dropdownOpen)} style={{
-            background: 'var(--bg-secondary)',
-            width: '40px', height: '40px', borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-          }}>
+          <button
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+            style={{
+              background: 'var(--bg-secondary)',
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: 'none',
+              cursor: 'pointer'
+            }}
+          >
             <FaUser size={18} />
           </button>
+
           {dropdownOpen && (
             <div style={{
-              position: 'absolute', right: 0, top: '50px',
-              background: 'var(--bg-secondary)', borderRadius: '12px',
-              width: '200px', padding: '8px',
+              position: 'absolute',
+              right: 0,
+              top: '50px',
+              background: 'var(--bg-secondary)',
+              borderRadius: '12px',
+              width: '220px',
+              padding: '12px',
               border: '1px solid var(--border-color)',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.2)', zIndex: 20
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+              zIndex: 20
             }}>
-              <button style={dropdownItemStyle} onClick={handleUpload}><FaFileUpload /> Upload Notes</button>
-              <button style={dropdownItemStyle} onClick={handleProgress}><FaChartLine /> Progress</button>
-              <button style={dropdownItemStyle} onClick={handleLightMode}><FaSun /> Light Mode</button>
-              <div style={{ height: '1px', background: 'var(--border-color)', margin: '8px 0' }}></div>
-              <button style={{ ...dropdownItemStyle, color: '#FF5B5B' }} onClick={handleLogout}><FaSignOutAlt /> Logout</button>
+
+              {/* User Name */}
+              <div style={{
+                fontWeight: 600,
+                marginBottom: '8px',
+                padding: '8px 12px'
+              }}>
+                👋 {user?.name || "Student"}
+              </div>
+
+              <div style={{
+                height: '1px',
+                background: 'var(--border-color)',
+                margin: '6px 0'
+              }}></div>
+
+              {/* Profile Button */}
+              <button
+                style={dropdownItemStyle}
+                onClick={() => {
+                  setDropdownOpen(false);
+                  navigate("/profile");
+                }}
+              >
+                <FaUser /> Profile
+              </button>
+
+              {/* Logout */}
+              <button
+                style={{ ...dropdownItemStyle, color: '#FF5B5B' }}
+                onClick={handleLogout}
+              >
+                <FaSignOutAlt /> Logout
+              </button>
+
             </div>
           )}
         </div>
+
       </div>
     </header>
   );
