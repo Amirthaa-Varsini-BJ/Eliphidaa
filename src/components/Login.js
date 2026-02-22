@@ -50,6 +50,13 @@ navigate("/dashboard");};
     const toggleDarkMode = () => {
         setIsDarkMode(prevMode => !prevMode);
     };
+    useEffect(() => {
+  document.body.style.overflow = "hidden";
+
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, []);
 
     useEffect(() => {
         // Sparkle creation logic (unchanged)
@@ -121,7 +128,7 @@ navigate("/dashboard");};
                 </svg>
             </div>
 
-            <div className="container d-flex align-items-center justify-content-center vh-100 login-container">
+            <div className="container d-flex align-items-center justify-content-center login-container">
                 <div ref={loginFormWrapperRef} className="login-form-book-wrapper">
                     <div className="login-form p-4">
                         <h3 className="text-center mb-4 login-title">Welcome Back 👋</h3>
@@ -151,7 +158,7 @@ navigate("/dashboard");};
                             <a href="/forgot" className="d-block text-center mt-3 forgot-password-link">Forgot Password?</a>
 
                             <div className="social-login text-center mt-4">
-                                <button type="button" className="btn btn-light w-100 mb-2 social-button google-button">
+                                <button type="button" className="btn btn-light social-button google-button">
                                     <i className="bi bi-google me-2"></i> Login with Google
                                 </button>
                             </div>
