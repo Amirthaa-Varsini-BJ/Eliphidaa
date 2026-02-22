@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./UploadNotes.css";
-
+import { semestersData, subjectsData } from "../data/subjectData";
+import * as pdfjsLib from "pdfjs-dist";
+import "pdfjs-dist/build/pdf.worker.entry";
 function UploadNotes() {
   const [form, setForm] = useState({
     name: "",

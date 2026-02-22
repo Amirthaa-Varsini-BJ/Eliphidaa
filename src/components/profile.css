@@ -6,7 +6,61 @@
   align-items: center;
   padding: 40px;
 }
+.themed-card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
 
+.upload-form input,
+.upload-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
+  color: var(--text-primary);
+}
+
+.themed-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--accent-purple);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.themed-button-small {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  background: var(--accent-purple);
+  color: white;
+  border: none;
+}
+
+.danger-button-small {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  background: #ff4d4f;
+  color: white;
+  border: none;
+}
+.upload-form select {
+  appearance: none;
+  background-color: #1e293b;
+  color: white;
+}
+
+.upload-form select option {
+  background-color: #1e293b;
+  color: white;
+}
 .profile-card {
   background: #1e293b;
   width: 650px;
