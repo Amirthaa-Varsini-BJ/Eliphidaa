@@ -131,7 +131,7 @@ navigate("/dashboard");};
             <div className="container d-flex align-items-center justify-content-center login-container">
                 <div ref={loginFormWrapperRef} className="login-form-book-wrapper">
                     <div className="login-form p-4">
-                        <h3 className="text-center mb-4 login-title">Welcome Back 👋</h3>
+                        <h1 className="text-center mb-4 login-title">Welcome Back 👋</h1>
                         <form className="login-form-content" onSubmit={handleSubmit}>
                             <div className="form-group mb-3">
                                 <label>Email</label>

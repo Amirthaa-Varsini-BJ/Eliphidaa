@@ -12,6 +12,7 @@
     "firebase": "^12.2.1",
     "gsap": "^3.14.2",
     "jspdf": "^3.0.1",
+    "pdfjs-dist": "^3.11.174",
     "react": "^19.1.0",
     "react-calendar": "^6.0.0",
     "react-dom": "^19.1.0",

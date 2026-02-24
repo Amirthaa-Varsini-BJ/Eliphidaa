@@ -247,6 +247,9 @@ body {
 
 /* Login form box - now uses variables */
 .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 40px 35px;   /* Bigger spacing */
     text-align: center;
     background-color: var(--form-bg-color);
@@ -367,19 +370,21 @@ body {
 
 /* Social buttons - now uses variables */
 .btn-light {
-    width: 85%;
-    margin: 10px auto;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-    display: flex;
+          /* SAME as input */
+    margin: 0 auto;      /* center it */
+    display: flex;       /* for icon alignment */
     align-items: center;
     justify-content: center;
-    padding: 12px 20px;
-    font-weight: 500;
+    gap: 8px;
+
+    padding: 12px 15px;
+    border-radius: 10px;
+
     color: var(--btn-light-text);
     background-color: var(--btn-light-bg);
     border: 1px solid var(--btn-light-border);
+
+    transition: all 0.3s ease;
 }
 
 .btn-light:hover {
@@ -455,7 +460,21 @@ p {
     animation: slideIn 0.8s ease-out forwards;
     opacity: 0;
 }
+.social-login {
+    display: flex;
+    justify-content: center;   /* center content */
+}
+.social-button {
+    width: 85%;                /* SAME as input fields */
+    max-width: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
+    padding: 12px 15px;
+    border-radius: 10px;
+}
 .login-form-content div:nth-child(1) { animation-delay: 0.2s; }
 .login-form-content div:nth-child(2) { animation-delay: 0.3s; }
 .login-form-content button:nth-of-type(1) { animation-delay: 0.4s; }
