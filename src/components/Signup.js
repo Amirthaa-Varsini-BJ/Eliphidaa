@@ -1,53 +1,44 @@
-// src/components/Signup.js
-import React, { useEffect, useRef, useState } from 'react';
-import './Signup.css'; // We'll create this CSS file next
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useNavigate, Link } from "react-router-dom";
-// You might want a different sound for signup, or reuse the book-open one.
-// For now, let's assume a 'register-chime.mp3' or similar, placed in /public/sounds/
-const signupSound = new Audio('/sounds/register-chime.mp3'); // IMPORTANT: Verify this path!
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
-const Signup = ({ setIsLoggedIn }) => {    const sparkleContainerRef = useRef(null);
-    const signupFormWrapperRef = useRef(null);
-    const [isDarkMode, setIsDarkMode] = useState(
-        () => localStorage.getItem('theme') === 'dark'
-    );
-const navigate = useNavigate();
+const Signup = ({ setIsLoggedIn }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
-const [name, setName] = useState("");
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const [confirmPassword, setConfirmPassword] = useState("");
-const handleSubmit = (e) => {
-  e.preventDefault();
-
-  if (!name || !email || !password || !confirmPassword) {
-    alert("Please fill all fields");
-    return;
-  }
-
-  if (password !== confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
-
-  const userData = {
-    name,
-    email
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Please fill all fields");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    const userData = { name, email };
+    localStorage.setItem("elphiUser", JSON.stringify(userData));
+    setIsLoggedIn(true);
+    navigate("/dashboard");
   };
 
-  localStorage.setItem("elphiUser", JSON.stringify(userData));
+  return (
+    <div style={{ padding: "40px", maxWidth: "400px", margin: "100px auto" }}>
+      <h2>Sign Up (Simplified for Debug)</h2>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} style={{ padding: "10px" }} />
+        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ padding: "10px" }} />
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ padding: "10px" }} />
+        <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} style={{ padding: "10px" }} />
+        <button type="submit" style={{ padding: "10px", background: "#9055FF", color: "white", border: "none", cursor: "pointer" }}>Sign Up</button>
+      </form>
+    </div>
+  );
+};
 
-  if (setIsLoggedIn) {
-    setIsLoggedIn(true);
-  }
-
-navigate("/dashboard");};
-    // Apply dark mode class to body on state change
-    useEffect(() => {
-        if (isDarkMode) {
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark');
+export default Signup;
         } else {
             document.body.classList.remove('dark-mode');
             localStorage.setItem('theme', 'light');

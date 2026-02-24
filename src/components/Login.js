@@ -1,53 +1,36 @@
-// src/components/Login.js
-import React, { useEffect, useRef, useState } from 'react'; // Import useState
-import './Login.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import { Link, useNavigate } from 'react-router-dom';
-
-// Create an Audio object instance outside the component to avoid re-creation
-const bookOpenSound = new Audio('/sounds/book-open.mp3'); // IMPORTANT: Verify this path!
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ setIsLoggedIn }) => {
-        const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const navigate = useNavigate();
-    const sparkleContainerRef = useRef(null);
-    const loginFormWrapperRef = useRef(null);
-    const handleSubmit = (e) => {
-  e.preventDefault();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  if (!email || !password) {
-    alert("Please fill all fields");
-    return;
-  }
-
-  const userData = {
-    name: email.split("@")[0],
-    email: email
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+    const userData = { name: email.split("@")[0], email };
+    localStorage.setItem("elphiUser", JSON.stringify(userData));
+    setIsLoggedIn(true);
+    navigate("/dashboard");
   };
 
-  localStorage.setItem("elphiUser", JSON.stringify(userData));
+  return (
+    <div style={{ padding: "40px", maxWidth: "400px", margin: "100px auto" }}>
+      <h2>Login (Simplified for Debug)</h2>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} style={{ padding: "10px" }} />
+        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} style={{ padding: "10px" }} />
+        <button type="submit" style={{ padding: "10px", background: "#4A6FFF", color: "white", border: "none", cursor: "pointer" }}>Login</button>
+      </form>
+    </div>
+  );
+};
 
-  setIsLoggedIn(true);   // 🔥 IMPORTANT
-navigate("/dashboard");};
-    // New state for dark mode
-    const [isDarkMode, setIsDarkMode] = useState(
-        () => localStorage.getItem('theme') === 'dark' // Initialize from localStorage
-    );
-
-    // Apply dark mode class to body on state change
-    useEffect(() => {
-        if (isDarkMode) {
-            document.body.classList.add('dark-mode');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.body.classList.remove('dark-mode');
-            localStorage.setItem('theme', 'light');
-        }
-    }, [isDarkMode]);
-
-    // Toggle dark mode function
-    const toggleDarkMode = () => {
+export default Login;
         setIsDarkMode(prevMode => !prevMode);
     };
 

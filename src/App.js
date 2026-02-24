@@ -22,15 +22,11 @@ function DashboardLayout({ setIsLoggedIn }) {
     <>
       <Header setIsLoggedIn={setIsLoggedIn} />
       <div className="app-container">
-        <SemestersSidebar />
-        <main className="main-content">
-          <VideoSection />
-          <NotesSection />
-        </main>
-        <aside className="right-sidebar">
-          <CalendarAndTasks />
-          <StudyRooms />
-        </aside>
+        {/* All dashboard components temporarily disabled for debugging */}
+        <div style={{ padding: "40px", color: "var(--text-secondary)", gridColumn: "1 / -1" }}>
+          <h2>Dashboard (Components Disabled for Debug)</h2>
+          <p>If you see this, the dashboard layout works.</p>
+        </div>
       </div>
     </>
   );
@@ -108,8 +104,8 @@ function App() {
 
       </Routes>
 
-      {/* Chat widget always visible */}
-      <ElphiChatWidget />
+      {/* Chat widget always visible - TEMPORARILY DISABLED */}
+      {/* <ElphiChatWidget /> */}
     </Router>
   );
 }

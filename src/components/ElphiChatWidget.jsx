@@ -54,7 +54,7 @@ function ElphiChatWidget() {
       console.error(err);
       setMessages((prev) => [
         ...prev,
-        { sender: 'ai', text: '❌ Error connecting to AI.' },
+        { sender: 'ai', text: ' Error connecting to AI.' },
       ]);
     } finally {
       setLoading(false);
